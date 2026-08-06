@@ -98,3 +98,105 @@ Already have an account?
 > **Note:** If the demo is hosted on a free-tier service (e.g., Render), the backend may take **30–60 seconds** to wake up after a period of inactivity.
 
 ---
+
+
+# 💡 Why This Project?
+
+Preparing for technical interviews often requires candidates to search through multiple resources, identify missing skills, and manually prepare resumes.
+
+This project automates that process by combining:
+
+- Resume Parsing
+- Artificial Intelligence
+- Authentication
+- File Uploads
+- PDF Generation
+- MongoDB Data Storage
+- React Frontend
+- REST APIs
+
+The goal is to provide an intelligent assistant that generates a complete interview preparation plan in just a few seconds.
+
+---
+
+# ⭐ Key Features
+
+## 👤 Authentication
+
+- User Registration
+- User Login
+- Secure JWT Authentication
+- Cookie-Based Authentication
+- Protected Routes
+- Logout Functionality
+
+---
+
+## 🤖 AI Features
+
+- Resume Analysis
+- Job Description Analysis
+- Self Description Analysis
+- Match Score Generation
+- Technical Question Generation
+- Behavioral Question Generation
+- Skill Gap Identification
+- Seven-Day Preparation Plan
+- AI Resume Generation
+
+---
+
+## 📄 Resume Features
+
+- PDF Upload
+- Resume Parsing
+- Resume Optimization
+- Resume Generation
+- Resume PDF Download
+
+---
+
+## 📊 Report Features
+
+- Personalized Interview Report
+- Recent Reports History
+- Report Storage
+- Individual Report Page
+- Resume Generation
+- Match Score Display
+
+---
+
+# 🏗️ System Architecture
+
+```text
+                        +-------------------------+
+                        |      React Frontend     |
+                        |       (Vite + React)    |
+                        +------------+------------+
+                                     |
+                                 Axios API
+                                     |
+                                     ▼
+                        +-------------------------+
+                        |     Express Backend     |
+                        | Authentication & APIs   |
+                        +------------+------------+
+                                     |
+                +--------------------+--------------------+
+                |                                         |
+                ▼                                         ▼
+      +----------------------+               +----------------------+
+      |   Google Gemini AI   |               |      MongoDB         |
+      | AI Report Generator  |               | Users & Reports DB   |
+      +----------------------+               +----------------------+
+                |
+                ▼
+      +-----------------------------+
+      | AI Interview Report         |
+      | Resume Generation           |
+      | PDF Generation              |
+      +-----------------------------+
+```
+
+---
