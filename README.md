@@ -200,3 +200,301 @@ The goal is to provide an intelligent assistant that generates a complete interv
 ```
 
 ---
+
+
+# 🔄 Application Workflow
+
+```text
+User Registration/Login
+          │
+          ▼
+JWT Authentication
+          │
+          ▼
+Upload Resume (PDF)
+          │
+          ▼
+Enter Self Description
+          │
+          ▼
+Paste Job Description
+          │
+          ▼
+Backend Extracts Resume Text
+          │
+          ▼
+Google Gemini AI Processing
+          │
+          ▼
+Generate Interview Report
+          │
+          ▼
+Validate AI Response (Zod)
+          │
+          ▼
+Store Report in MongoDB
+          │
+          ▼
+Display Report
+          │
+          ▼
+Generate Resume PDF
+```
+
+---
+
+# 📁 Project Structure
+
+```text
+Interview Preparation Assistant
+
+├── Backend
+│   ├── src
+│   │   ├── config
+│   │   ├── controllers
+│   │   ├── middlewares
+│   │   ├── routes
+│   │   ├── services
+│   │   └── models
+│   │
+│   ├── server.js
+│   ├── package.json
+│   └── .env
+│
+├── Frontend
+│   ├── public
+│   ├── src
+│   │   ├── features
+│   │   ├── style
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── app.routes.jsx
+│   │
+│   ├── package.json
+│   └── vite.config.js
+│
+└── README.md
+```
+
+---
+
+# 🛠 Technologies Used
+
+## Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT
+- bcryptjs
+- multer
+- cors
+- dotenv
+- pdf-parse
+- Puppeteer
+- Google Gemini AI
+- Zod
+- zod-to-json-schema
+
+---
+
+## Frontend
+
+- React
+- Vite
+- React Router DOM
+- Axios
+- Sass
+- Lucide React
+- Context API
+
+---
+
+## Development Tools
+
+- VS Code
+- Postman
+- MongoDB Compass
+- Git
+- GitHub
+- npm
+
+---
+
+## Architecture Pattern
+
+The application follows a layered backend architecture to improve maintainability and scalability.
+
+```text
+Routes
+   │
+Controllers
+   │
+Services
+   │
+Database / AI
+```
+
+This separation of concerns makes the project easier to test, extend, and maintain as new features are added.
+
+
+
+---
+
+# 📡 API Documentation
+
+The backend exposes RESTful APIs for authentication, interview report generation, and resume generation.
+
+---
+
+# 🔐 Authentication APIs
+
+| Method | Endpoint | Description | Authentication |
+|--------|----------|-------------|----------------|
+| POST | `/api/auth/register` | Register a new user | ❌ |
+| POST | `/api/auth/login` | Login an existing user | ❌ |
+| GET | `/api/auth/logout` | Logout current user | ✅ |
+| GET | `/api/auth/get-me` | Get logged-in user profile | ✅ |
+
+---
+
+## Register User
+
+### Endpoint
+
+```http
+POST /api/auth/register
+```
+
+### Request Body
+
+```json
+{
+    "username":"John Doe",
+    "email":"john@example.com",
+    "password":"12345678"
+}
+```
+
+### Response
+
+```json
+{
+    "success": true,
+    "message": "User registered successfully."
+}
+```
+
+---
+
+## Login User
+
+### Endpoint
+
+```http
+POST /api/auth/login
+```
+
+### Request Body
+
+```json
+{
+    "email":"john@example.com",
+    "password":"12345678"
+}
+```
+
+### Response
+
+```json
+{
+    "success": true,
+    "token":"JWT_TOKEN"
+}
+```
+
+---
+
+# 🤖 Interview APIs
+
+| Method | Endpoint | Description | Authentication |
+|--------|----------|-------------|----------------|
+| POST | `/api/interview` | Generate Interview Report | ✅ |
+| GET | `/api/interview/report/:interviewId` | Get Single Interview Report | ✅ |
+| GET | `/api/interview/reports` | Get All Reports | ✅ |
+| POST | `/api/interview/resume/pdf/:interviewReportId` | Generate Resume PDF | ✅ |
+
+---
+
+## Generate Interview Report
+
+### Endpoint
+
+```http
+POST /api/interview
+```
+
+### Form Data
+
+| Key | Type |
+|------|------|
+| resume | PDF File |
+| selfDescription | Text |
+| jobDescription | Text |
+
+---
+
+### Example Request
+
+```text
+resume: resume.pdf
+
+selfDescription:
+"I am a MERN Stack developer passionate about building scalable web applications."
+
+jobDescription:
+"Looking for a React developer with Node.js experience."
+```
+
+---
+
+### Example Response
+
+```json
+{
+    "matchScore": 86,
+    "technicalQuestions": [
+        {
+            "question":"Explain React Virtual DOM.",
+            "answer":"..."
+        }
+    ],
+    "behaviorQuestions":[
+        {
+            "question":"Tell me about yourself."
+        }
+    ],
+    "skillGaps":[
+        "TypeScript",
+        "Testing"
+    ],
+    "preparationPlan":[
+        "...7 Day Roadmap..."
+    ]
+}
+```
+
+---
+
+## Generate Resume PDF
+
+### Endpoint
+
+```http
+POST /api/interview/resume/pdf/:interviewReportId
+```
+
+This endpoint generates a professionally formatted PDF resume based on the AI-generated resume content.
+
+---
