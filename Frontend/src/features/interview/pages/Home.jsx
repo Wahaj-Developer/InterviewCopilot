@@ -3,32 +3,39 @@ import "../style/home.scss";
 import { useInterview } from "../hooks/useInterview.js";
 import { useNavigate } from "react-router";
 
+
 const Home = () => {
 
     const {
         loading,
         generateReport,
-        reports
+        reports,
+        deleteReport
     } = useInterview();
+
 
     const [
         jobDescription,
         setJobDescription
     ] = useState("");
 
+
     const [
         selfDescription,
         setSelfDescription
     ] = useState("");
+
 
     const [
         showDemoNotice,
         setShowDemoNotice
     ] = useState(true);
 
+
     const resumeInputRef = useRef();
 
     const navigate = useNavigate();
+
 
     const handleGenerateReport = async () => {
 
@@ -44,10 +51,25 @@ const Home = () => {
         navigate(`/interview/${data._id}`);
     };
 
+
+    const handleDeleteReport = async (
+        e,
+        reportId
+    ) => {
+
+        e.stopPropagation();
+
+        await deleteReport(reportId);
+    };
+
+
     if (loading) {
 
         return (
-            <main className="loading-screen" aria-live="polite">
+            <main
+                className="loading-screen"
+                aria-live="polite"
+            >
 
                 <div className="loading-spinner" />
 
@@ -58,6 +80,7 @@ const Home = () => {
             </main>
         );
     }
+
 
     return (
         <div className="home-page">
@@ -85,6 +108,7 @@ const Home = () => {
 
                     </div>
 
+
                     <button
                         type="button"
                         className="demo-notice__close"
@@ -100,14 +124,17 @@ const Home = () => {
 
             )}
 
+
             <header className="page-header">
 
                 <h1>
                     Create Your Custom{" "}
+
                     <span className="highlight">
                         Interview Plan
                     </span>
                 </h1>
+
 
                 <p>
                     Let our AI analyze the job requirements
@@ -116,6 +143,7 @@ const Home = () => {
                 </p>
 
             </header>
+
 
             <div className="interview-card">
 
@@ -126,6 +154,7 @@ const Home = () => {
                         <div className="panel__header">
 
                             <span className="panel__icon">
+
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="18"
@@ -137,6 +166,7 @@ const Home = () => {
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
                                 >
+
                                     <rect
                                         x="2"
                                         y="7"
@@ -147,18 +177,23 @@ const Home = () => {
                                     />
 
                                     <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+
                                 </svg>
+
                             </span>
+
 
                             <h2>
                                 Target Job Description
                             </h2>
+
 
                             <span className="badge badge--required">
                                 Required
                             </span>
 
                         </div>
+
 
                         <textarea
                             onChange={(e) =>
@@ -172,19 +207,23 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                             maxLength={5000}
                         />
 
+
                         <div className="char-counter">
                             {jobDescription.length} / 5000 chars
                         </div>
 
                     </div>
 
+
                     <div className="panel-divider" />
+
 
                     <div className="panel panel--right">
 
                         <div className="panel__header">
 
                             <span className="panel__icon">
+
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="18"
@@ -196,6 +235,7 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
                                 >
+
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
 
                                     <circle
@@ -203,14 +243,18 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                                         cy="7"
                                         r="4"
                                     />
+
                                 </svg>
+
                             </span>
+
 
                             <h2>
                                 Your Profile
                             </h2>
 
                         </div>
+
 
                         <div className="upload-section">
 
@@ -223,6 +267,7 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                                 </span>
 
                             </label>
+
 
                             <label
                                 className="dropzone"
@@ -242,25 +287,32 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                     >
+
                                         <polyline points="16 16 12 12 8 16" />
+
                                         <line
                                             x1="12"
                                             y1="12"
                                             x2="12"
                                             y2="21"
                                         />
+
                                         <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
+
                                     </svg>
 
                                 </span>
+
 
                                 <p className="dropzone__title">
                                     Click to upload or drag & drop
                                 </p>
 
+
                                 <p className="dropzone__subtitle">
                                     PDF or DOCX
                                 </p>
+
 
                                 <input
                                     ref={resumeInputRef}
@@ -274,9 +326,11 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
 
                         </div>
 
+
                         <div className="or-divider">
                             <span>OR</span>
                         </div>
+
 
                         <div className="self-description">
 
@@ -286,6 +340,7 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                             >
                                 Tell us about yourself
                             </label>
+
 
                             <textarea
                                 id="self-description"
@@ -304,6 +359,7 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
 
                 </div>
 
+
                 <div className="interview-card__footer">
 
                     <div className="footer-info">
@@ -315,12 +371,14 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
 
                     </div>
 
+
                     <button
                         className="generate-btn"
                         onClick={handleGenerateReport}
                     >
 
                         Generate Interview Plan
+
 
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -333,6 +391,7 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                             strokeLinecap="round"
                             strokeLinejoin="round"
                         >
+
                             <line
                                 x1="5"
                                 y1="12"
@@ -341,6 +400,7 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                             />
 
                             <polyline points="12 5 19 12 12 19" />
+
                         </svg>
 
                     </button>
@@ -348,6 +408,7 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                 </div>
 
             </div>
+
 
             {reports?.length > 0 && (
 
@@ -357,9 +418,10 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                         Recent Reports
                     </h2>
 
+
                     <div className="reports-list">
 
-                                            {reports.map((report) => (
+                        {reports.map((report) => (
 
                             <div
                                 className="report-item"
@@ -372,12 +434,54 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                             >
 
                                 <span>
-                                    {report.title || "Untitled Position"}
+                                    {report.title ||
+                                        "Untitled Position"}
                                 </span>
+
 
                                 <span className="match-score">
                                     {report.matchScore}%
                                 </span>
+
+
+                                <button
+                                    type="button"
+                                    className="delete-report-btn"
+                                    onClick={(e) =>
+                                        handleDeleteReport(
+                                            e,
+                                            report._id
+                                        )
+                                    }
+                                    aria-label="Delete report"
+                                    title="Delete report"
+                                >
+
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="17"
+                                        height="17"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+
+                                        <polyline points="3 6 5 6 21 6" />
+
+                                        <path d="M19 6l-1 14H6L5 6" />
+
+                                        <path d="M10 11v6" />
+
+                                        <path d="M14 11v6" />
+
+                                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+
+                                    </svg>
+
+                                </button>
 
                             </div>
 
@@ -388,6 +492,7 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                 </section>
 
             )}
+
 
             <footer className="page-footer">
 
@@ -408,5 +513,6 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
         </div>
     );
 };
+
 
 export default Home;
