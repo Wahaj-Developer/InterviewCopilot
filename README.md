@@ -88,7 +88,7 @@ deployment configuration.
 The frontend is configured to communicate with the deployed backend
 below.
 
-🔗 **Backend API:** https://interview-copilot-nine-lemon.vercel.app
+🔗:https://interview-copilot-6uhu.vercel.app/login
 
 The project also contains Vercel configuration files for deploying both
 the frontend and backend.
