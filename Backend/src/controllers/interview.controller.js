@@ -1,4 +1,7 @@
-const pdfParse = require("pdf-parse")
+const {
+    PDFParse,
+    PasswordException
+} = require("pdf-parse")
 const {
     generateInterviewReport,
     generateResumePdf
@@ -15,16 +18,25 @@ async function generateInterViewReportController(req, res) {
     }
 
     let resumeContent
+    const parser = new PDFParse({ data: req.file.buffer })
 
     try {
-        resumeContent = (await pdfParse(req.file.buffer)).text
+        const result = await parser.getText()
+        resumeContent = result.text
     } catch (err) {
+        console.error("PDF parse failed:", err)
+
         return res.status(400).json({
-            message: "Could not read the uploaded file. Please make sure it is a valid, non-corrupted PDF."
+            message: err instanceof PasswordException
+                ? "This PDF is password-protected. Please upload an unprotected PDF."
+                : "Could not read the uploaded file. Please make sure it is a valid PDF."
         })
+    } finally {
+        await parser.destroy()
     }
 
     const { selfDescription, jobDescription } = req.body
+    
 
     const interViewReportByAi = await generateInterviewReport({
         resume: resumeContent,
