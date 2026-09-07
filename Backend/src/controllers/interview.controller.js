@@ -8,7 +8,22 @@ const interviewReportModel = require("../models/interviewReport.model")
 
 async function generateInterViewReportController(req, res) {
 
-    const resumeContent = (await pdfParse(req.file.buffer)).text
+    if (!req.file) {
+        return res.status(400).json({
+            message: "Please upload your resume as a PDF file."
+        })
+    }
+
+    let resumeContent
+
+    try {
+        resumeContent = (await pdfParse(req.file.buffer)).text
+    } catch (err) {
+        return res.status(400).json({
+            message: "Could not read the uploaded file. Please make sure it is a valid, non-corrupted PDF."
+        })
+    }
+
     const { selfDescription, jobDescription } = req.body
 
     const interViewReportByAi = await generateInterviewReport({
