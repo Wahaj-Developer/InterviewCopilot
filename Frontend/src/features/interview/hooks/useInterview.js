@@ -50,11 +50,9 @@ export const useInterview = () => {
 
         setLoading(true)
 
-        let response = null
-
         try {
 
-            response = await generateInterviewReport({
+            const response = await generateInterviewReport({
                 jobDescription,
                 selfDescription,
                 resumeFile
@@ -64,17 +62,27 @@ export const useInterview = () => {
                 response.interviewReport
             )
 
+            return {
+                success: true,
+                interviewReport: response.interviewReport
+            }
+
         } catch (error) {
 
             console.log(error)
+
+            return {
+                success: false,
+                message:
+                    error.response?.data?.message ||
+                    "Something went wrong while generating the report. Please try again."
+            }
 
         } finally {
 
             setLoading(false)
 
         }
-
-        return response.interviewReport
     }
 
 
@@ -82,11 +90,9 @@ export const useInterview = () => {
 
         setLoading(true)
 
-        let response = null
-
         try {
 
-            response = await getInterviewReportById(
+            const response = await getInterviewReportById(
                 interviewId
             )
 
@@ -94,17 +100,19 @@ export const useInterview = () => {
                 response.interviewReport
             )
 
+            return response.interviewReport
+
         } catch (error) {
 
             console.log(error)
+
+            return null
 
         } finally {
 
             setLoading(false)
 
         }
-
-        return response.interviewReport
     }
 
 
@@ -112,27 +120,27 @@ export const useInterview = () => {
 
         setLoading(true)
 
-        let response = null
-
         try {
 
-            response = await getAllInterviewReports()
+            const response = await getAllInterviewReports()
 
             setReports(
                 response.interviewReports
             )
 
+            return response.interviewReports
+
         } catch (error) {
 
             console.log(error)
+
+            return null
 
         } finally {
 
             setLoading(false)
 
         }
-
-        return response.interviewReports
     }
 
 

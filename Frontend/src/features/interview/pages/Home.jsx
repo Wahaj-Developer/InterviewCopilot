@@ -32,6 +32,12 @@ const Home = () => {
     ] = useState(true);
 
 
+    const [
+        error,
+        setError
+    ] = useState("");
+
+
     const resumeInputRef = useRef();
 
     const navigate = useNavigate();
@@ -39,16 +45,25 @@ const Home = () => {
 
     const handleGenerateReport = async () => {
 
+        setError("");
+
         const resumeFile =
             resumeInputRef.current.files[0];
 
-        const data = await generateReport({
+        const result = await generateReport({
             jobDescription,
             selfDescription,
             resumeFile
         });
 
-        navigate(`/interview/${data._id}`);
+        if (result?.success) {
+            navigate(`/interview/${result.interviewReport._id}`);
+        } else {
+            setError(
+                result?.message ||
+                "Something went wrong. Please try again."
+            );
+        }
     };
 
 
@@ -143,6 +158,18 @@ const Home = () => {
                 </p>
 
             </header>
+
+
+            {error && (
+
+                <div
+                    className="form-error"
+                    role="alert"
+                >
+                    {error}
+                </div>
+
+            )}
 
 
             <div className="interview-card">
@@ -310,7 +337,7 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
 
 
                                 <p className="dropzone__subtitle">
-                                    PDF or DOCX
+                                    PDF only
                                 </p>
 
 
@@ -318,7 +345,7 @@ e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScri
                                     ref={resumeInputRef}
                                     id="resume"
                                     type="file"
-                                    accept=".pdf,.docx"
+                                    accept=".pdf,application/pdf"
                                     hidden
                                 />
 
