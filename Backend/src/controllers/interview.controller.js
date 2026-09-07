@@ -1,3 +1,4 @@
+const { CanvasFactory } = require("pdf-parse/worker")
 const {
     PDFParse,
     PasswordException
@@ -18,7 +19,7 @@ async function generateInterViewReportController(req, res) {
     }
 
     let resumeContent
-    const parser = new PDFParse({ data: req.file.buffer })
+    const parser = new PDFParse({ data: req.file.buffer, CanvasFactory })
 
     try {
         const result = await parser.getText()
